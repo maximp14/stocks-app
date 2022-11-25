@@ -1,3 +1,4 @@
+import { StockSymbol } from "./../store/stock/stock.type";
 class StockService {
   externalUrl: string = process.env.REACT_APP_EXTERNAL_BASE_URL as string;
   localApiUrl: string = process.env.REACT_APP_API_HOST as string;
@@ -25,6 +26,17 @@ class StockService {
   async getStocks(id?: number): Promise<any> {
     const response = await fetch(`${this.localApiUrl}/user/get-stocks/${id}`);
 
+    return response.json();
+  }
+
+  async deleteStock(stock: StockSymbol, currentUserId?: number): Promise<any> {
+    const response = await fetch(`${this.localApiUrl}/user/delete-stock`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ currentUserId, stock }),
+    });
     return response.json();
   }
 }

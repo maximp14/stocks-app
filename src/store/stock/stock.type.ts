@@ -10,4 +10,5 @@ export interface StockSymbol {
   symbol: string;
   name: string;
   currency: string;
+  isActive: boolean;
 }

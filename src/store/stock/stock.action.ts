@@ -58,6 +58,26 @@ export const getUserStocks =
     dispatch(stockSlice.actions.setSymbolList(response));
   };
 
+export const deteleStock =
+  (stock: StockSymbol) =>
+  async (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch(stockSlice.actions.isFetching(true));
+    const currentUserId: number | undefined = getState().user.currentUser?.id;
+
+    let stockToDelte = { ...stock };
+
+    stockToDelte.isActive = false;
+
+    const response = await stockService.deleteStock(
+      stockToDelte,
+      currentUserId
+    );
+
+    if (!response) return;
+
+    dispatch(stockSlice.actions.isFetching(false));
+  };
+
 const updatedState = (list: any, entity: any) => {
   if (list) {
     list = [...list, entity];

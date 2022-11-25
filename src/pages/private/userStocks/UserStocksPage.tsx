@@ -4,6 +4,7 @@ import StocksTable from "./StocksTable";
 import { useAppDispatch, useAppSelector } from "../../../store/redux-hooks";
 import {
   addSymbol,
+  deteleStock,
   getAutocompleteData,
   getUserStocks,
   setShowMessage,
@@ -49,6 +50,15 @@ const UserStocksPage: React.FC = () => {
     if (selectedSymbol) dispatch(addSymbol(selectedSymbol));
   }
 
+  function handleClickOnSymbol() {
+    console.log("hice click");
+  }
+
+  function handleDelete(symbol: any) {
+    dispatch(deteleStock(symbol));
+    dispatch(getUserStocks());
+  }
+
   return (
     <div className="stock__container">
       <NavBar />
@@ -74,7 +84,11 @@ const UserStocksPage: React.FC = () => {
       </div>
 
       <div className="stock__table">
-        <StocksTable symbolList={symbolList} />
+        <StocksTable
+          symbolList={symbolList}
+          handleSymbol={handleClickOnSymbol}
+          handleDelete={handleDelete}
+        />
       </div>
       {message && <Alert severity={message.severity}>{message.text}</Alert>}
     </div>

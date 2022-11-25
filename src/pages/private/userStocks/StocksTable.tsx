@@ -11,13 +11,15 @@ import { Button } from "@mui/material";
 
 interface StockTableProps {
   symbolList: StockSymbol[];
+  handleSymbol: () => void;
+  handleDelete: (symbol: any) => void;
 }
 
-const StocksTable: React.FC<StockTableProps> = ({ symbolList }) => {
-  function handleOnClick(e: any) {
-    console.log(e.target.textContent);
-  }
-
+const StocksTable: React.FC<StockTableProps> = ({
+  symbolList,
+  handleSymbol,
+  handleDelete,
+}) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -36,14 +38,14 @@ const StocksTable: React.FC<StockTableProps> = ({ symbolList }) => {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Button variant="text" onClick={handleOnClick}>
+                <Button variant="text" onClick={handleSymbol}>
                   {symbol.symbol}
                 </Button>
               </TableCell>
               <TableCell align="right">{symbol.name}</TableCell>
               <TableCell align="right">{symbol.currency}</TableCell>
               <TableCell align="right">
-                <Button variant="text" onClick={handleOnClick}>
+                <Button variant="text" onClick={() => handleDelete(symbol)}>
                   Eliminar
                 </Button>
               </TableCell>
