@@ -3,7 +3,9 @@ export interface StockState {
   autocompletedata: any[];
   isFetching: boolean;
   symbolList: StockSymbol[];
+  selectedSymbol?: StockSymbol;
   message: Message | null;
+  stockDetail: any;
 }
 
 export interface StockSymbol {

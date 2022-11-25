@@ -1,4 +1,4 @@
-import { Message, User } from "./../user/user.type";
+import { Message } from "./../user/user.type";
 import { stockSlice } from "./stockSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import stockService from "../../services/stock.service";
@@ -77,6 +77,21 @@ export const deteleStock =
 
     dispatch(stockSlice.actions.isFetching(false));
   };
+
+export const setSelectedStock =
+  (stock: StockSymbol) => async (dispatch: Dispatch) => {
+    dispatch(stockSlice.actions.setSelectedSymbol(stock));
+  };
+
+export const getStockDetails = () => async (dispatch: Dispatch) => {
+  dispatch(stockSlice.actions.isFetching(true));
+
+  const response = await stockService.getStockDetail();
+
+  if (!response) return;
+
+  dispatch(stockSlice.actions.setStockDetail(response.values));
+};
 
 const updatedState = (list: any, entity: any) => {
   if (list) {

@@ -7,6 +7,7 @@ import {
   deteleStock,
   getAutocompleteData,
   getUserStocks,
+  setSelectedStock,
   setShowMessage,
 } from "../../../store/stock/stock.action";
 import "./style.css";
@@ -18,13 +19,18 @@ import {
   TextField,
 } from "@mui/material";
 import { StockSymbol } from "../../../store/stock/stock.type";
+import { useNavigate } from "react-router";
+import { paths } from "../../../components/paths";
 
 const UserStocksPage: React.FC = () => {
+  const [selectedSymbol, setSeletectedSymbol] = useState<StockSymbol>();
+
   const dispatch = useAppDispatch();
   const { autocompletedata, message, symbolList } = useAppSelector(
     (state) => state.stock
   );
-  const [selectedSymbol, setSeletectedSymbol] = useState<StockSymbol>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (autocompletedata.length === 0) {
@@ -50,8 +56,9 @@ const UserStocksPage: React.FC = () => {
     if (selectedSymbol) dispatch(addSymbol(selectedSymbol));
   }
 
-  function handleClickOnSymbol() {
-    console.log("hice click");
+  function handleClickOnSymbol(symbol: StockSymbol) {
+    dispatch(setSelectedStock(symbol));
+    navigate(paths.stockDetail);
   }
 
   function handleDelete(symbol: any) {

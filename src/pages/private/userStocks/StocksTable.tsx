@@ -11,7 +11,7 @@ import { Button } from "@mui/material";
 
 interface StockTableProps {
   symbolList: StockSymbol[];
-  handleSymbol: () => void;
+  handleSymbol: (symbol: any) => void;
   handleDelete: (symbol: any) => void;
 }
 
@@ -38,7 +38,7 @@ const StocksTable: React.FC<StockTableProps> = ({
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                <Button variant="text" onClick={handleSymbol}>
+                <Button variant="text" onClick={() => handleSymbol(symbol)}>
                   {symbol.symbol}
                 </Button>
               </TableCell>
