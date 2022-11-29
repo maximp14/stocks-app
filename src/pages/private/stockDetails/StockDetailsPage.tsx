@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/redux-hooks";
-import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import NavBar from "../../../components/nav/NavBar";
 
 import "./style.css";
 import { getStockDetails } from "../../../store/stock/stock.action";
 import StockChart from "./StockChart";
+import Test from "./Test";
 
 const StockDetailsPage: React.FC = () => {
-  const [value, setValue] = React.useState("female");
+  const [value, setValue] = useState("");
+  const [tabs, setTabs] = useState(0);
   const dispatch = useAppDispatch();
-  const { stockDetail } = useAppSelector((state) => state.stock);
+  const { stockHigh, stockLow, stockVolume } = useAppSelector(
+    (state) => state.stock
+  );
+
+  const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
+    setTabs(newValue);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -20,7 +36,29 @@ const StockDetailsPage: React.FC = () => {
     dispatch(getStockDetails());
   }
 
-  console.log("value", stockDetail);
+  function tabToReturn() {
+    switch (tabs) {
+      case 0:
+        return (
+          <>
+            {stockHigh.length > 0 && (
+              <StockChart dataHigh={stockHigh} dataLow={stockLow} />
+            )}
+          </>
+        );
+        break;
+      case 1:
+        return (
+          <>
+            <Test />
+          </>
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <div>
       <NavBar />
@@ -48,7 +86,14 @@ const StockDetailsPage: React.FC = () => {
           </Button>
         </div>
       </div>
-      <StockChart />
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <Tabs value={tabs} onChange={handleChangeTabs} centered>
+          <Tab label="Line Chart" />
+          <Tab label="Bar Chart" />
+          <Tab label="Unknow Chart" />
+        </Tabs>
+      </Box>
+      <Box sx={{ padding: 2 }}>{tabToReturn()}</Box>
     </div>
   );
 };

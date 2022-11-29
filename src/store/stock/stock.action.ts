@@ -90,7 +90,17 @@ export const getStockDetails = () => async (dispatch: Dispatch) => {
 
   if (!response) return;
 
-  dispatch(stockSlice.actions.setStockDetail(response.values));
+  const high = response.values.map((stock: any) => {
+    return parseInt(stock.high);
+  });
+  const low = response.values.map((stock: any) => {
+    return parseInt(stock.low);
+  });
+  const volume = response.values.map((stock: any) => {
+    return parseInt(stock.close);
+  });
+
+  dispatch(stockSlice.actions.setStockData({ high, low, volume }));
 };
 
 const updatedState = (list: any, entity: any) => {

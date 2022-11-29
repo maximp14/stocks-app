@@ -6,7 +6,9 @@ const initialState: StockState = {
   isFetching: false,
   symbolList: [],
   message: null,
-  stockDetail: null,
+  stockHigh: [],
+  stockLow: [],
+  stockVolume: [],
 };
 
 export const stockSlice = createSlice({
@@ -35,9 +37,11 @@ export const stockSlice = createSlice({
       ...state,
       selectedSymbol: payload,
     }),
-    setStockDetail: (state, { payload }) => ({
+    setStockData: (state, { payload }) => ({
       ...state,
-      stockDetail: payload,
+      stockHigh: payload.high,
+      stockLow: payload.low,
+      stockVolume: payload.volume,
       isFetching: false,
     }),
   },

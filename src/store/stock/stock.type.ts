@@ -5,7 +5,9 @@ export interface StockState {
   symbolList: StockSymbol[];
   selectedSymbol?: StockSymbol;
   message: Message | null;
-  stockDetail: any;
+  stockHigh: any[];
+  stockLow: any[];
+  stockVolume: any[];
 }
 
 export interface StockSymbol {
