@@ -9,6 +9,7 @@ const initialState: StockState = {
   stockHigh: [],
   stockLow: [],
   stockVolume: [],
+  selectedInterval: null,
 };
 
 export const stockSlice = createSlice({
@@ -43,6 +44,10 @@ export const stockSlice = createSlice({
       stockLow: payload.low,
       stockVolume: payload.volume,
       isFetching: false,
+    }),
+    setSelectedInterval: (state, { payload }) => ({
+      ...state,
+      selectedInterval: payload,
     }),
   },
 });

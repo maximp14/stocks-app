@@ -12,10 +12,10 @@ const LineChart: React.FC<LineChartProps> = ({ dataHigh, dataLow }) => {
 
   const options: Highcharts.Options = {
     title: {
-      text: "High's",
+      text: "High's & Low's",
     },
     subtitle: {
-      text: "Line chart for high values",
+      text: "Line chart for high and low values",
     },
     yAxis: {
       title: {

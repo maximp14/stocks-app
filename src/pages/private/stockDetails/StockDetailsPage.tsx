@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/redux-hooks";
 import {
+  Autocomplete,
   Box,
   Button,
   FormControlLabel,
@@ -8,29 +9,28 @@ import {
   RadioGroup,
   Tab,
   Tabs,
+  TextField,
 } from "@mui/material";
 import NavBar from "../../../components/nav/NavBar";
 
 import "./style.css";
-import { getStockDetails } from "../../../store/stock/stock.action";
+import {
+  getStockDetails,
+  setSelectedInterval,
+} from "../../../store/stock/stock.action";
 import LineChart from "./charts/LineChart";
-import Test from "./Test";
 import ColumnChart from "./charts/ColumnChart";
+import { interval } from "../../../utils/interval-options";
 
 const StockDetailsPage: React.FC = () => {
-  const [value, setValue] = useState("");
   const [tabs, setTabs] = useState(0);
   const dispatch = useAppDispatch();
-  const { stockHigh, stockLow, stockVolume } = useAppSelector(
+  const { stockHigh, stockLow, stockVolume, selectedInterval } = useAppSelector(
     (state) => state.stock
   );
 
   const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
     setTabs(newValue);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
   };
 
   function handleGetDetail() {
@@ -60,27 +60,23 @@ const StockDetailsPage: React.FC = () => {
     }
   }
 
+  console.log("selected interval", selectedInterval);
+
   return (
     <div>
       <NavBar />
       <div className="stock_detail__container">
-        <RadioGroup
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          value={value}
-          onChange={handleChange}
-        >
-          <FormControlLabel
-            value="realtime"
-            control={<Radio />}
-            label="Tiempo real"
-          />
-          <FormControlLabel
-            value="historic"
-            control={<Radio />}
-            label="Histórico"
-          />
-        </RadioGroup>
+        <Autocomplete
+          placeholder="Autocompletar"
+          value={selectedInterval}
+          options={interval}
+          sx={{ width: 300 }}
+          getOptionLabel={(option: any) => option.name}
+          onChange={(event: any, newValue: any) => {
+            dispatch(setSelectedInterval(newValue));
+          }}
+          renderInput={(params: any) => <TextField {...params} />}
+        />
         <div className="detail__button">
           <Button variant="outlined" onClick={handleGetDetail}>
             Graficar
@@ -91,7 +87,6 @@ const StockDetailsPage: React.FC = () => {
         <Tabs value={tabs} onChange={handleChangeTabs} centered>
           <Tab label="Line Chart" />
           <Tab label="Bar Chart" />
-          <Tab label="Unknow Chart" />
         </Tabs>
       </Box>
       <Box sx={{ padding: 2 }}>{tabToReturn()}</Box>

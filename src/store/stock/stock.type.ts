@@ -1,3 +1,4 @@
+import { IntervalInterface } from "./../../utils/interval-options";
 import { Message } from "./../user/user.type";
 export interface StockState {
   autocompletedata: any[];
@@ -8,6 +9,7 @@ export interface StockState {
   stockHigh: any[];
   stockLow: any[];
   stockVolume: any[];
+  selectedInterval: IntervalInterface | null;
 }
 
 export interface StockSymbol {

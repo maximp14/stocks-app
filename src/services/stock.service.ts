@@ -1,3 +1,4 @@
+import { IntervalInterface } from "./../utils/interval-options";
 import { StockSymbol } from "./../store/stock/stock.type";
 class StockService {
   externalUrl: string = process.env.REACT_APP_EXTERNAL_BASE_URL as string;
@@ -41,9 +42,9 @@ class StockService {
     return response.json();
   }
 
-  async getStockDetail(): Promise<any> {
+  async getStockDetail(interval: IntervalInterface): Promise<any> {
     const response = await fetch(
-      `${this.externalUrl}/time_series?symbol=TSLA&interval=5min&apikey=${this.apiKeyExternal}`
+      `${this.externalUrl}/time_series?symbol=TSLA&interval=${interval.value}&output=200&apikey=${this.apiKeyExternal}`
     );
     return response.json();
   }

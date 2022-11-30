@@ -1,3 +1,4 @@
+import { IntervalInterface } from "./../../utils/interval-options";
 import { Message } from "./../user/user.type";
 import { stockSlice } from "./stockSlice";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -83,25 +84,37 @@ export const setSelectedStock =
     dispatch(stockSlice.actions.setSelectedSymbol(stock));
   };
 
-export const getStockDetails = () => async (dispatch: Dispatch) => {
-  dispatch(stockSlice.actions.isFetching(true));
+export const getStockDetails =
+  () => async (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch(stockSlice.actions.isFetching(true));
 
-  const response = await stockService.getStockDetail();
+    const currentInterval = getState().stock.selectedInterval;
+    let response;
+    if (!!currentInterval) {
+      response = await stockService.getStockDetail(currentInterval);
+    }
 
-  if (!response) return;
+    if (!response) return;
 
-  const high = response.values.map((stock: any) => {
-    return parseInt(stock.high);
-  });
-  const low = response.values.map((stock: any) => {
-    return parseInt(stock.low);
-  });
-  const volume = response.values.map((stock: any) => {
-    return parseInt(stock.close);
-  });
+    const high = response.values.map((stock: any) => {
+      return parseInt(stock.high);
+    });
+    const low = response.values.map((stock: any) => {
+      return parseInt(stock.low);
+    });
+    const volume = response.values.map((stock: any) => {
+      return parseInt(stock.close);
+    });
 
-  dispatch(stockSlice.actions.setStockData({ high, low, volume }));
-};
+    console.log("res: ", response);
+
+    dispatch(stockSlice.actions.setStockData({ high, low, volume }));
+  };
+
+export const setSelectedInterval =
+  (interval: any) => async (dispatch: Dispatch) => {
+    dispatch(stockSlice.actions.setSelectedInterval(interval));
+  };
 
 const updatedState = (list: any, entity: any) => {
   if (list) {
