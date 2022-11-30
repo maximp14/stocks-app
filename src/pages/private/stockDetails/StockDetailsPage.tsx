@@ -13,8 +13,9 @@ import NavBar from "../../../components/nav/NavBar";
 
 import "./style.css";
 import { getStockDetails } from "../../../store/stock/stock.action";
-import StockChart from "./StockChart";
+import LineChart from "./charts/LineChart";
 import Test from "./Test";
+import ColumnChart from "./charts/ColumnChart";
 
 const StockDetailsPage: React.FC = () => {
   const [value, setValue] = useState("");
@@ -42,7 +43,7 @@ const StockDetailsPage: React.FC = () => {
         return (
           <>
             {stockHigh.length > 0 && (
-              <StockChart dataHigh={stockHigh} dataLow={stockLow} />
+              <LineChart dataHigh={stockHigh} dataLow={stockLow} />
             )}
           </>
         );
@@ -50,7 +51,7 @@ const StockDetailsPage: React.FC = () => {
       case 1:
         return (
           <>
-            <Test />
+            <ColumnChart dataVolume={stockVolume} />
           </>
         );
         break;

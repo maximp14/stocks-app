@@ -2,12 +2,12 @@ import React, { useRef } from "react";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-type StockChartProps = {
+type LineChartProps = {
   dataHigh: any[];
   dataLow: any[];
 };
 
-const StockChart: React.FC<StockChartProps> = ({ dataHigh, dataLow }) => {
+const LineChart: React.FC<LineChartProps> = ({ dataHigh, dataLow }) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
 
   const options: Highcharts.Options = {
@@ -57,4 +57,4 @@ const StockChart: React.FC<StockChartProps> = ({ dataHigh, dataLow }) => {
   );
 };
 
-export default StockChart;
+export default LineChart;
