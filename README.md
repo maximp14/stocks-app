@@ -32,3 +32,4 @@ REACT_APP_API_KEY=your_private_apikey
 ### TODOs
 
 - auth (proper redirection)"
+

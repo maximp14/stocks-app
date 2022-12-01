@@ -9,6 +9,7 @@ import { loginOutUser } from "../../store/user/user.action";
 export default function ButtonAppBar() {
   const dispatch = useAppDispatch();
   const { currentUser } = useAppSelector((state) => state.user);
+  const { selectedSymbol } = useAppSelector((state) => state.stock);
 
   function handleLogOutUser() {
     dispatch(loginOutUser());
@@ -18,7 +19,9 @@ export default function ButtonAppBar() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Mis Acciones
+            {selectedSymbol
+              ? `${selectedSymbol.symbol} - ${selectedSymbol.name} - ${selectedSymbol.currency}`
+              : "Mis Acciones"}
           </Typography>
           <Typography variant="h6" component="div" sx={{ flexGrow: 0.1 }}>
             {currentUser && currentUser.username}

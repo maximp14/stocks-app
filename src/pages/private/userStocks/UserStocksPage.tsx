@@ -4,8 +4,10 @@ import StocksTable from "./StocksTable";
 import { useAppDispatch, useAppSelector } from "../../../store/redux-hooks";
 import {
   addSymbol,
+  deteleStock,
   getAutocompleteData,
   getUserStocks,
+  setSelectedStock,
   setShowMessage,
 } from "../../../store/stock/stock.action";
 import "./style.css";
@@ -17,13 +19,18 @@ import {
   TextField,
 } from "@mui/material";
 import { StockSymbol } from "../../../store/stock/stock.type";
+import { useNavigate } from "react-router";
+import { paths } from "../../../components/paths";
 
 const UserStocksPage: React.FC = () => {
+  const [selectedSymbol, setSeletectedSymbol] = useState<StockSymbol>();
+
   const dispatch = useAppDispatch();
   const { autocompletedata, message, symbolList } = useAppSelector(
     (state) => state.stock
   );
-  const [selectedSymbol, setSeletectedSymbol] = useState<StockSymbol>();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (autocompletedata.length === 0) {
@@ -49,6 +56,16 @@ const UserStocksPage: React.FC = () => {
     if (selectedSymbol) dispatch(addSymbol(selectedSymbol));
   }
 
+  function handleClickOnSymbol(symbol: StockSymbol) {
+    dispatch(setSelectedStock(symbol));
+    navigate(paths.stockDetail);
+  }
+
+  function handleDelete(symbol: any) {
+    dispatch(deteleStock(symbol));
+    dispatch(getUserStocks());
+  }
+
   return (
     <div className="stock__container">
       <NavBar />
@@ -65,16 +82,20 @@ const UserStocksPage: React.FC = () => {
             setSeletectedSymbol(newValue);
           }}
           renderInput={(params: any) => (
-            <TextField {...params} label="Autocompletar" />
+            <TextField label="Autocompletar" {...params} />
           )}
         />
         <Button variant="outlined" onClick={handleAddSymbol}>
-          Agregar símbolo
+          Add Stock
         </Button>
       </div>
 
       <div className="stock__table">
-        <StocksTable symbolList={symbolList} />
+        <StocksTable
+          symbolList={symbolList}
+          handleSymbol={handleClickOnSymbol}
+          handleDelete={handleDelete}
+        />
       </div>
       {message && <Alert severity={message.severity}>{message.text}</Alert>}
     </div>

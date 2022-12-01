@@ -1,4 +1,5 @@
-import { Message, User } from "./../user/user.type";
+import { IntervalInterface } from "./../../utils/interval-options";
+import { Message } from "./../user/user.type";
 import { stockSlice } from "./stockSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 import stockService from "../../services/stock.service";
@@ -56,6 +57,63 @@ export const getUserStocks =
     if (!response) return;
 
     dispatch(stockSlice.actions.setSymbolList(response));
+  };
+
+export const deteleStock =
+  (stock: StockSymbol) =>
+  async (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch(stockSlice.actions.isFetching(true));
+    const currentUserId: number | undefined = getState().user.currentUser?.id;
+
+    let stockToDelte = { ...stock };
+
+    stockToDelte.isActive = false;
+
+    const response = await stockService.deleteStock(
+      stockToDelte,
+      currentUserId
+    );
+
+    if (!response) return;
+
+    dispatch(stockSlice.actions.isFetching(false));
+  };
+
+export const setSelectedStock =
+  (stock: StockSymbol) => async (dispatch: Dispatch) => {
+    dispatch(stockSlice.actions.setSelectedSymbol(stock));
+  };
+
+export const getStockDetails =
+  () => async (dispatch: Dispatch, getState: () => RootState) => {
+    dispatch(stockSlice.actions.isFetching(true));
+
+    const currentInterval = getState().stock.selectedInterval;
+    let response;
+    if (!!currentInterval) {
+      response = await stockService.getStockDetail(currentInterval);
+    }
+
+    if (!response) return;
+
+    const high = response.values.map((stock: any) => {
+      return parseInt(stock.high);
+    });
+    const low = response.values.map((stock: any) => {
+      return parseInt(stock.low);
+    });
+    const volume = response.values.map((stock: any) => {
+      return parseInt(stock.close);
+    });
+
+    console.log("res: ", response);
+
+    dispatch(stockSlice.actions.setStockData({ high, low, volume }));
+  };
+
+export const setSelectedInterval =
+  (interval: any) => async (dispatch: Dispatch) => {
+    dispatch(stockSlice.actions.setSelectedInterval(interval));
   };
 
 const updatedState = (list: any, entity: any) => {

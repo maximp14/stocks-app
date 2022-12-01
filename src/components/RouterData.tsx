@@ -12,6 +12,10 @@ const UserStocks = React.lazy(
   () => import("../pages/private/userStocks/UserStocksPage")
 );
 
+const StockDetails = React.lazy(
+  () => import("../pages/private/stockDetails/StockDetailsPage")
+);
+
 export const routes: Routes[] = [
   {
     path: paths.login,
@@ -20,5 +24,9 @@ export const routes: Routes[] = [
   {
     path: paths.userStock,
     component: UserStocks,
+  },
+  {
+    path: paths.stockDetail,
+    component: StockDetails,
   },
 ];
