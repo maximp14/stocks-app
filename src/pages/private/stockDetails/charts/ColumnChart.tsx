@@ -33,7 +33,7 @@ const ColumnChart: React.FC<ColumnChartProps> = ({ dataVolume }) => {
     },
     series: [
       {
-        name: "high",
+        name: "volume",
         type: "column",
         data: dataVolume,
       },

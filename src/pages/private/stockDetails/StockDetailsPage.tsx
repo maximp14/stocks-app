@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../store/redux-hooks";
-import {
-  Autocomplete,
-  Box,
-  Button,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Tab,
-  Tabs,
-  TextField,
-} from "@mui/material";
+import { Autocomplete, Box, Button, Tab, Tabs, TextField } from "@mui/material";
 import NavBar from "../../../components/nav/NavBar";
 
 import "./style.css";
@@ -75,12 +65,16 @@ const StockDetailsPage: React.FC = () => {
           onChange={(event: any, newValue: any) => {
             dispatch(setSelectedInterval(newValue));
           }}
-          renderInput={(params: any) => <TextField {...params} />}
+          renderInput={(params: any) => (
+            <TextField label="Autocomplete" {...params} />
+          )}
         />
         <div className="detail__button">
-          <Button variant="outlined" onClick={handleGetDetail}>
-            Graficar
-          </Button>
+          {selectedInterval && (
+            <Button variant="outlined" onClick={handleGetDetail}>
+              Generate Graph
+            </Button>
+          )}
         </div>
       </div>
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>

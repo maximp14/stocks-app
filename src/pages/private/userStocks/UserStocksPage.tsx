@@ -82,11 +82,11 @@ const UserStocksPage: React.FC = () => {
             setSeletectedSymbol(newValue);
           }}
           renderInput={(params: any) => (
-            <TextField {...params} label="Autocompletar" />
+            <TextField label="Autocompletar" {...params} />
           )}
         />
         <Button variant="outlined" onClick={handleAddSymbol}>
-          Agregar símbolo
+          Add Stock
         </Button>
       </div>
 
