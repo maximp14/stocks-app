@@ -1,7 +1,14 @@
 .stock_detail__container {
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
-.detail__button {
-  margin: 20px 0 0 0;
+.stock_detail__autocomplete {
+  display: inline-flex;
+  margin: auto;
+}
+
+.stock_detail__autocomplete button {
+  margin-left: 15px;
 }

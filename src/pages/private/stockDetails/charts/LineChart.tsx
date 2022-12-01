@@ -32,6 +32,11 @@ const LineChart: React.FC<LineChartProps> = ({ dataHigh, dataLow }) => {
       align: "right",
       verticalAlign: "middle",
     },
+    plotOptions: {
+      series: {
+        lineWidth: 5,
+      },
+    },
     series: [
       {
         name: "high",

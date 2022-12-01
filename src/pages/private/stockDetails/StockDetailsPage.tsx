@@ -56,20 +56,21 @@ const StockDetailsPage: React.FC = () => {
     <div>
       <NavBar />
       <div className="stock_detail__container">
-        <Autocomplete
-          placeholder="Autocompletar"
-          value={selectedInterval}
-          options={interval}
-          sx={{ width: 300 }}
-          getOptionLabel={(option: any) => option.name}
-          onChange={(event: any, newValue: any) => {
-            dispatch(setSelectedInterval(newValue));
-          }}
-          renderInput={(params: any) => (
-            <TextField label="Autocomplete" {...params} />
-          )}
-        />
-        <div className="detail__button">
+        <div className="stock_detail__autocomplete">
+          <Autocomplete
+            placeholder="Autocompletar"
+            value={selectedInterval}
+            options={interval}
+            sx={{ width: 300 }}
+            getOptionLabel={(option: any) => option.name}
+            onChange={(event: any, newValue: any) => {
+              dispatch(setSelectedInterval(newValue));
+            }}
+            renderInput={(params: any) => (
+              <TextField label="Autocomplete" {...params} />
+            )}
+          />
+
           {selectedInterval && (
             <Button variant="outlined" onClick={handleGetDetail}>
               Generate Graph

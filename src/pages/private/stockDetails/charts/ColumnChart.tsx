@@ -31,6 +31,19 @@ const ColumnChart: React.FC<ColumnChartProps> = ({ dataVolume }) => {
       align: "right",
       verticalAlign: "middle",
     },
+    plotOptions: {
+      series: {
+        borderColor: "#BD4733",
+        color: {
+          linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+          stops: [
+            [0, "#A24B4A"], // start
+            [0.5, "#864E60"], // middle
+            [1, "#6B5277"], // end
+          ],
+        },
+      },
+    },
     series: [
       {
         name: "volume",
