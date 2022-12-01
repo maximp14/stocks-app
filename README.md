@@ -30,5 +30,4 @@ REACT_APP_EXTERNAL_BASE_URL=https://api.twelvedata.com
 
 ### TODOs
 
-- auth (proper redirection)
-- stock graphics in "real time"
+- auth (proper redirection)"
