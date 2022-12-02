@@ -11,13 +11,13 @@ import {
 import LineChart from "./charts/LineChart";
 import ColumnChart from "./charts/ColumnChart";
 import { interval } from "../../../utils/interval-options";
+import LoadingComponent from "../../../components/loading/LoadingComponent";
 
 const StockDetailsPage: React.FC = () => {
   const [tabs, setTabs] = useState(0);
   const dispatch = useAppDispatch();
-  const { stockHigh, stockLow, stockVolume, selectedInterval } = useAppSelector(
-    (state) => state.stock
-  );
+  const { stockHigh, stockLow, stockVolume, selectedInterval, isFetching } =
+    useAppSelector((state) => state.stock);
 
   const handleChangeTabs = (event: React.SyntheticEvent, newValue: number) => {
     setTabs(newValue);
@@ -85,6 +85,7 @@ const StockDetailsPage: React.FC = () => {
         </Tabs>
       </Box>
       <Box sx={{ padding: 2 }}>{tabToReturn()}</Box>
+      <LoadingComponent isFetching={isFetching} />
     </div>
   );
 };

@@ -25,9 +25,9 @@ const StocksTable: React.FC<StockTableProps> = ({
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Símbolo</TableCell>
-            <TableCell align="right">Nombre</TableCell>
-            <TableCell align="right">Moneda</TableCell>
+            <TableCell>Symbol</TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Currency</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
@@ -46,7 +46,7 @@ const StocksTable: React.FC<StockTableProps> = ({
               <TableCell align="right">{symbol.currency}</TableCell>
               <TableCell align="right">
                 <Button variant="text" onClick={() => handleDelete(symbol)}>
-                  Eliminar
+                  Delete
                 </Button>
               </TableCell>
             </TableRow>

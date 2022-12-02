@@ -21,12 +21,13 @@ import {
 import { StockSymbol } from "../../../store/stock/stock.type";
 import { useNavigate } from "react-router";
 import { paths } from "../../../components/paths";
+import LoadingComponent from "../../../components/loading/LoadingComponent";
 
 const UserStocksPage: React.FC = () => {
   const [selectedSymbol, setSeletectedSymbol] = useState<StockSymbol>();
 
   const dispatch = useAppDispatch();
-  const { autocompletedata, message, symbolList } = useAppSelector(
+  const { autocompletedata, message, symbolList, isFetching } = useAppSelector(
     (state) => state.stock
   );
 
@@ -82,7 +83,7 @@ const UserStocksPage: React.FC = () => {
             setSeletectedSymbol(newValue);
           }}
           renderInput={(params: any) => (
-            <TextField label="Autocompletar" {...params} />
+            <TextField label="Autocomplete" {...params} />
           )}
         />
         <Button variant="outlined" onClick={handleAddSymbol}>
@@ -98,6 +99,7 @@ const UserStocksPage: React.FC = () => {
         />
       </div>
       {message && <Alert severity={message.severity}>{message.text}</Alert>}
+      <LoadingComponent isFetching={isFetching} />
     </div>
   );
 };

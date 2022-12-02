@@ -14,6 +14,17 @@ class UserService {
     const data = await response.json();
     return { statusCode, data };
   }
+
+  async register(user: User): Promise<any> {
+    const response = await fetch(`${this.localApiUrl}/user/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    return response.json();
+  }
 }
 
 const userService = new UserService();

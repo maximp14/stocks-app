@@ -3,14 +3,12 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import LoadingComponent from "./loading/LoadingComponent";
 import { useAppSelector } from "../store/redux-hooks";
 import { routes } from "./RouterData";
-import { paths } from "./paths";
-import LoginPage from "../pages/public/login/LoginPage";
 
 const Router: React.FC = () => {
   const { authenticated } = useAppSelector((state) => state.user);
 
   function renderLoading() {
-    return <LoadingComponent isFetching />;
+    return <LoadingComponent isFetching={true} />;
   }
 
   return (

@@ -19,6 +19,18 @@ export const loginUser = (user: User) => async (dispatch: Dispatch) => {
   }
 };
 
+export const registerUser = (user: User) => async (dispatch: Dispatch) => {
+  dispatch(userSlice.actions.isFetching(true));
+
+  const response = await userService.register(user);
+
+  if (!response) return;
+
+  setTimeout(() => {
+    dispatch(userSlice.actions.isFetching(false));
+  }, 1500);
+};
+
 export const loginOutUser = () => async (dispatch: Dispatch) => {
   dispatch(userSlice.actions.isFetching(true));
 
